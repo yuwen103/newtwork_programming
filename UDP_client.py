@@ -59,16 +59,16 @@ packet +=option.encode('utf-8')
 
 discover()
 str, addr=s.recvfrom(4096)
-print("Get the IP first:",str[16:20])
+print("Get the IP first:",str[16:20],struct.unpack('B',str[16:17])[0],",",struct.unpack('B',str[17:18])[0],",",struct.unpack('B',str[18:19])[0],",",struct.unpack('B',str[19:20])[0])
 request(str)
 str2, addr2=s.recvfrom(4096)
 #last_id=str(struct.unpack('B',str2[16:17])[0])+"."+str(struct.unpack('B',str2[17:18])[0])+"."+str(struct.unpack('B',str2[18:19])[0])+"."+str(struct.unpack('B',str2[19:20])[0])
-print("Get the IP second:",struct.unpack('B',str2[16:17])[0],",",struct.unpack('B',str2[17:18])[0],",",struct.unpack('B',str2[18:19])[0],",",struct.unpack('B',str2[19:20])[0])
+print("Get the IP second:",str2[16:20],struct.unpack('B',str2[16:17])[0],",",struct.unpack('B',str2[17:18])[0],",",struct.unpack('B',str2[18:19])[0],",",struct.unpack('B',str2[19:20])[0])
 
-while True:  
-    msg = input("Input anything:")  
-    if not msg:  
-        break  
+#while True:  
+#    msg = input("Input anything:")  
+#    if not msg:  
+#        break  
 #    s.sendto(msg.encode('utf-8'), ('localhost',67))  
 #    str, addr=s.recvfrom(2048)
 #    if not str:
