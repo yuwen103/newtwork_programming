@@ -45,8 +45,11 @@ def offer(data,ip):
     packet += data[36:40] #Server host name not given
     packet += data[40:44] #Boot file name not given
     packet += data[44:48]   #Magic cookie: DHCP
-    packet +="offe".encode('utf-8')
-    packet +=b'\x00' * 210
+    packet += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
+    #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
+    packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
+    packet += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
+    packet += b'\xff'   #End Option
     return packet
 
 def ACK(data,ip):
@@ -67,11 +70,15 @@ def ACK(data,ip):
     packet2 += data[36:40] #Server host name not given
     packet2 += data[40:44] #Boot file name not given
     packet2 += data[44:48]   #Magic cookie: DHCP
-    packet2 +="offe".encode('utf-8')
-    packet2 +=b'\x00' * 210
+    packet += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
+    #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
+    packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
+    packet += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
+    packet += b'\xff'   #End Option
     return packet2
 
 data=''
+flag=0
 while True:
     try:
         s.settimeout(10.0)
@@ -83,12 +90,14 @@ while True:
     else:
         #print(data,addr)
         #s.sendto("Server get client message.".encode('utf-8'),addr)
-        if data[48:52]==b'disc':
+        if flag==0:
+            flag=1
             new_ip=getip(data)
             new_pack=offer(data,new_ip)
             s.sendto(new_pack,addr)
             #s.sendto("Server get abc.".encode('utf-8'),addr)
-        elif data[48:52]==b'requ':
+        elif flag==1:
+            flag=0
             new_ip2=regetip(data)
             new_pack2=ACK(data,new_ip2)
             s.sendto(new_pack2,addr)
