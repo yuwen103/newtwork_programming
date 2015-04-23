@@ -46,8 +46,7 @@ def offer(data,ip):
     packet += b'\x00' * 67  #Server host name not given
     packet += b'\x00' * 125 #Boot file name not given
     packet += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
-    packet += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
-    #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
+    packet += b'\x35\x01\x02'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
     packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
     packet += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
     packet += b'\xff'   #End Option
@@ -72,8 +71,7 @@ def ACK(data,ip):
     packet2 += b'\x00' * 67  #Server host name not given
     packet2 += b'\x00' * 125 #Boot file name not given
     packet2 += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
-    packet2 += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
-    #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
+    packet2 += b'\x35\x01\x05'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
     packet2 += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
     packet2 += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
     packet2 += b'\xff'   #End Option

@@ -26,8 +26,7 @@ def request(data):
     packet2 += b'\x00' * 67  #Server host name not given
     packet2 += b'\x00' * 125 #Boot file name not given
     packet2 += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
-    packet2 += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
-    #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
+    packet2 += b'\x35\x01\x03'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
     packet2 += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
     packet2 += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
     packet2 += b'\xff'   #End Option
@@ -62,30 +61,9 @@ packet += b'\x00' * 67  #Server host name not given
 packet += b'\x00' * 125 #Boot file name not given
 packet += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
 packet += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
-#packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
 packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
 packet += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
 packet += b'\xff'   #End Option
-
-#packet = b''
-#packet += b'\x01'   #OP
-#packet += b'\x01'   #HTYPE
-#packet += b'\x06'   #HLEN
-#packet += b'\x00'   #HOPS 
-#packet += XID       #XID
-#packet += b'\x00\x00'    #SECS
-#packet += b'\x80\x00'   #FLAGS
-#packet += b'\x00\x00\x00\x00'   #CIADDR
-#packet += b'\x00\x00\x00\x00'   #YIADDR
-#packet += b'\x00\x00\x00\x00'   #SIADDR
-#packet += b'\x00\x00\x00\x00'   #GIADDR
-#packet += b'\x00\x26\x9e\x04'   #Client MAC address
-#packet += b'\x00\x00\x00\x00'   #Client hardware address 
-#packet += b'\x00\x00\x00\x00' #Server host name not given
-#packet += b'\x00\x00\x00\x00' #Boot file name not given
-#packet += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
-#packet +=option.encode('utf-8')
-#packet +=b'\x00' * 210
 
 while True:
     discover()
