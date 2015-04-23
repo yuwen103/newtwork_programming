@@ -26,6 +26,7 @@ def request(data):
     packet2 += data[40:44] #Boot file name not given
     packet2 += data[44:48]   #Magic cookie: DHCP
     packet2 +="requ".encode('utf-8')
+    packet2 +=b'\x00' * 210
     s.sendto(packet2, ('140.123.104.247',67))	
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  
@@ -56,6 +57,7 @@ packet += b'\x00\x00\x00\x00' #Server host name not given
 packet += b'\x00\x00\x00\x00' #Boot file name not given
 packet += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
 packet +=option.encode('utf-8')
+packet +=b'\x00' * 210
 
 discover()
 str, addr=s.recvfrom(4096)

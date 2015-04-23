@@ -46,6 +46,7 @@ def offer(data,ip):
     packet += data[40:44] #Boot file name not given
     packet += data[44:48]   #Magic cookie: DHCP
     packet +="offe".encode('utf-8')
+    packet +=b'\x00' * 210
     return packet
 
 def ACK(data,ip):
@@ -67,6 +68,7 @@ def ACK(data,ip):
     packet2 += data[40:44] #Boot file name not given
     packet2 += data[44:48]   #Magic cookie: DHCP
     packet2 +="offe".encode('utf-8')
+    packet2 +=b'\x00' * 210
     return packet2
 
 data=''
