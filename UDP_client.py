@@ -20,13 +20,17 @@ def request(data):
     packet2 += b'\x00\x00\x00\x00'   #YIADDR
     packet2 += data[20:24]   #SIADDR
     packet2 += data[24:28]   #GIADDR
-    packet2 += data[28:32]   #Client MAC address
-    packet2 += data[32:36]   #Client hardware address 
-    packet2 += data[36:40] #Server host name not given
-    packet2 += data[40:44] #Boot file name not given
-    packet2 += data[44:48]   #Magic cookie: DHCP
-    packet2 +="requ".encode('utf-8')
-    packet2 +=b'\x00' * 210
+    packet2 += b'\x00\x26\x9e\x04\x1e\x9b'   #Client MAC address: 00:26:9e:04:1e:9b
+    #packet += macb
+    packet2 += b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'   #Client hardware address padding: 00000000000000000000
+    packet2 += b'\x00' * 67  #Server host name not given
+    packet2 += b'\x00' * 125 #Boot file name not given
+    packet2 += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
+    packet2 += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
+    #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
+    packet2 += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
+    packet2 += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
+    packet2 += b'\xff'   #End Option
     s.sendto(packet2, ('140.123.104.247',67))	
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  

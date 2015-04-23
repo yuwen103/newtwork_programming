@@ -70,11 +70,11 @@ def ACK(data,ip):
     packet2 += data[36:40] #Server host name not given
     packet2 += data[40:44] #Boot file name not given
     packet2 += data[44:48]   #Magic cookie: DHCP
-    packet += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
+    packet2 += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
     #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
-    packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
-    packet += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
-    packet += b'\xff'   #End Option
+    packet2 += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
+    packet2 += b'\x37\x03\x03\x01\x06'   #Option: (t=55,l=3) Parameter Request List
+    packet2 += b'\xff'   #End Option
     return packet2
 
 data=''
@@ -83,20 +83,21 @@ while True:
     try:
         s.settimeout(10.0)
         data, addr = s.recvfrom(2048)
+        print(addr)
     except:
         print('time out')
     if not data:  
         print("client has not exist")
     else:
-        #print(data,addr)
-        #s.sendto("Server get client message.".encode('utf-8'),addr)
-        if flag==0:
+        if addr==('0.0.0.0', 68):
+            print("ERROR addr",addr)
+        elif flag== 0:
             flag=1
             new_ip=getip(data)
             new_pack=offer(data,new_ip)
             s.sendto(new_pack,addr)
             #s.sendto("Server get abc.".encode('utf-8'),addr)
-        elif flag==1:
+        elif flag== 1:
             flag=0
             new_ip2=regetip(data)
             new_pack2=ACK(data,new_ip2)
