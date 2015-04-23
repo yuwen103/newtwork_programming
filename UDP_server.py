@@ -40,11 +40,12 @@ def offer(data,ip):
     packet += b'\xC0\xA8\x01'+struct.pack('!B',ip)   #YIADDR
     packet += b'\xC0\xA8\x01\x01'   #SIADDR
     packet += data[24:28]   #GIADDR
-    packet += data[28:32]   #Client MAC address
-    packet += data[32:36]   #Client hardware address 
-    packet += data[36:40] #Server host name not given
-    packet += data[40:44] #Boot file name not given
-    packet += data[44:48]   #Magic cookie: DHCP
+    packet += b'\x00\x26\x9e\x04\x1e\x9b'   #Client MAC address: 00:26:9e:04:1e:9b
+    #packet += macb
+    packet += b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'   #Client hardware address padding: 00000000000000000000
+    packet += b'\x00' * 67  #Server host name not given
+    packet += b'\x00' * 125 #Boot file name not given
+    packet += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
     packet += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
     #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
     packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
@@ -65,11 +66,12 @@ def ACK(data,ip):
     packet2 += b'\xC0\xA8\x01'+struct.pack('!B',ip)   #YIADDR
     packet2 += b'\xC0\xA8\x01\x01'   #SIADDR
     packet2 += data[24:28]   #GIADDR
-    packet2 += data[28:32]   #Client MAC address
-    packet2 += data[32:36]   #Client hardware address 
-    packet2 += data[36:40] #Server host name not given
-    packet2 += data[40:44] #Boot file name not given
-    packet2 += data[44:48]   #Magic cookie: DHCP
+    packet2 += b'\x00\x26\x9e\x04\x1e\x9b'   #Client MAC address: 00:26:9e:04:1e:9b
+    #packet += macb
+    packet2 += b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'   #Client hardware address padding: 00000000000000000000
+    packet2 += b'\x00' * 67  #Server host name not given
+    packet2 += b'\x00' * 125 #Boot file name not given
+    packet2 += b'\x63\x82\x53\x63'   #Magic cookie: DHCP
     packet2 += b'\x35\x01\x01'   #Option: (t=53,l=1) DHCP Message Type = DHCP Discover
     #packet += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'   #Option: (t=61,l=6) Client identifier
     packet2 += b'\x3d\x06\x00\x26\x9e\x04\x1e\x9b'
