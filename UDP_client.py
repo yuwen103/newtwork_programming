@@ -29,7 +29,7 @@ def request(data):
     s.sendto(packet2, ('140.123.104.247',67))	
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  
-s.bind(('140.123.104.247',68))
+s.bind(('',68))
 
 XID=b''
 option="disc"
