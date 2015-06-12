@@ -2,8 +2,9 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/app_improved.py
 # A payments application with basic security improvements added.
-
+import ssl
 import bank, uuid
+
 from flask import (Flask, abort, flash, get_flashed_messages,
                    redirect, render_template, request, session, url_for)
 
@@ -59,6 +60,9 @@ def pay():
                            dollars=dollars, memo=memo,
                            csrf_token=session['csrf_token'])
 
+#ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+#ctx.load_cert_chain('crt-key-crs/download-system.crt', 'crt-key-crs/download-system.key')
+
 if __name__ == '__main__':
     app.debug = True
-    app.run()
+    app.run('0.0.0.0', debug=True, port=5000, ssl_context=('C:\Python34\key\server.crt','C:\Python34\key\server.key'))
